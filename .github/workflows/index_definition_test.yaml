@@ -1,0 +1,29 @@
+name: "validate index definition"
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  validate-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Runs Elasticsearch
+        uses: elastic/elastic-github-actions/elasticsearch@master
+        with:
+          stack-version: 8.4.0
+          ecurity-enabled: false
+
+      - name: Set up Go 1.19
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.19
+        id: go
+      
+      - name: Install eskeeper
+        run: |
+          go install github.com/po3rin/eskeeper/cmd/eskeeper
+
+      - name: Run validation process
+        run: |
+          eskeeper -e http://localhost:9200 -s < $GITHUB_WORKSPACE/keeper/management.yaml

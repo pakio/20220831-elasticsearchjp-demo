@@ -1,0 +1,6 @@
+index:
+  - name: valid-index
+    mapping: indices/valid-index.json
+
+  - name: invalid-index
+    mapping: indices/invalid-index.json

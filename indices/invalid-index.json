@@ -1,0 +1,34 @@
+{
+  "settings": {
+    "index": {
+      "analysis": {
+        "analyzer": {
+          "text_en": {
+            "type": "custom",
+            "tokenizer": "standard",
+            "filter": [
+              "asciifolding", "lowercase", "stop",
+              "stemmer", "custom_synonym"
+            ]
+          }
+        },
+        "filter": {
+          "custom_synonym": {
+            "type": "synonym",
+            "synonyms": [
+              "LOTR => The Lord of the Rings"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "text",
+        "analyzer": "text_en"
+      }
+    }
+  }
+}
