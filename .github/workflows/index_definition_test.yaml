@@ -12,18 +12,18 @@ jobs:
         uses: elastic/elastic-github-actions/elasticsearch@master
         with:
           stack-version: 8.4.0
-          ecurity-enabled: false
+          security-enabled: false
+      
+      - uses: actions/checkout@v2
 
       - name: Set up Go 1.19
         uses: actions/setup-go@v1
         with:
           go-version: 1.19
         id: go
-      
-      - name: Install eskeeper
-        run: |
-          go install github.com/po3rin/eskeeper/cmd/eskeeper
 
-      - name: Run validation process
+      - name: Install eskeeper and run validation process
         run: |
-          eskeeper -e http://localhost:9200 -s < $GITHUB_WORKSPACE/keeper/management.yaml
+          export PATH="$PATH:$(go env GOPATH)/bin"
+          go install github.com/po3rin/eskeeper/cmd/eskeeper@latest
+          eskeeper -e http://localhost:9200 < $GITHUB_WORKSPACE/keeper/management.yaml
