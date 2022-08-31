@@ -53,7 +53,7 @@ resource "elasticstack_elasticsearch_index" "invalid_index" {
     }
     setting {
       name  = "index.analysis.analyzer.text_en.filter"
-      value = "asciifolding,lowercase,stop,stemmer,custom_synonym"
+      value = "custom_synonym,asciifolding,lowercase,stop,stemmer"
     }
 
     # Synonyms settings
